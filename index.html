@@ -1,23 +1,54 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Hello World</title>
+    <title>Pixi Practice</title>
 </head>
 <body>
-    <script src="source/pixi.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js">//Loads the Pixi framework</script>
     <script type="text/javascript">
-        let type = "WebGL";
-        if (!PIXI.utils.isWebGLSupported()) {
-        type = "canvas";
-        }
 
-        PIXI.utils.sayHello(type);
-        //Create a Pixi Application
-        const app = new PIXI.Application({width: 256, height: 256});
+        /*let type = "WebGL"; //Block to revert to canvas, think I'd need to link the legacy library
+        if (!PIXI.utils.isWebGLSupported()) 
+        {
+            type = "canvas";
+        }*/
 
-        //Add the canvas that Pixi automatically created for you to the HTML document
+        //Create new Pixi window
+        const app = new PIXI.Application(
+        {
+            width: 1920,
+            height: 1080,
+            antialias: true,
+            backgroundColor: 0xc4dbf0
+        });
+
+        //Adds the Pixi window to the page
         document.body.appendChild(app.view);
+
+
+        //Store image as WebGL texture for the GPU
+        //const texture = PIXI.utils.TextureCache["images/tankChasis.png"];
+
+        //Convert texture and store as sprite
+        //const sprite = new PIXI.Sprite(texture);
+
+        //load an image and run the `setup` function when it's done
+        PIXI.Loader.shared.add("images/tankChassis.png").load(setup);
+
+        //This `setup` function will run when the image has loaded
+        function setup() 
+        {
+            //Create the cat sprite
+            let cat = new PIXI.Sprite(PIXI.Loader.shared.resources["images/tankChassis.png"].texture);
+
+            //Add the cat to the stage
+            app.stage.addChild(cat);
+        }
+  
+        
+
     </script>
 </body>
 </html>
